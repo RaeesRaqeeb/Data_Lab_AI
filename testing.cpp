@@ -1,145 +1,154 @@
-
 #include<iostream>
-
 using namespace std;
 
 class Nodes
 {
-public:
-Nodes *Next;
-string song_name;
+    public:
+    char info;
+    Nodes *next; 
 
-Nodes(string name)
-{
-song_name= name;
-Next=NULL;
+    Nodes(int value)
+    {
+        info= value;
+        next=NULL;
+
+    }
+
+};
+
+class Linked_List
+{   
+    private:
+        Nodes *top;
+        int length;
+
+    public:
+        Linked_List()
+        {
+            length=0;
+            top =NULL;
+
+
+        }
+
+    void push(int value)
+    {
+        
+
+        Nodes *n= new Nodes(value);
+        Nodes *curr=top;
+        if(top==NULL)
+        {
+            
+            top=n;
+
+        }
+        else if(top!=NULL)
+        {
+            n->next=curr;
+            top=n;
+        }
+        
+        length++;
+    }
+
+    char pop()
+    {
+        if(length==0)
+        {
+            return 'N';
+        }
+        Nodes *curr=top;
+        top=curr->next;
+        length-=1;
+        return curr->info;
+        delete curr;
+
+    }
+    void display()
+    {
+        if(length!=0)
+    {    Nodes *curr=top;
+        for(int i=0;i<length;i++)
+        {
+            cout<<(curr)->info<<endl;
+            curr=curr->next;
+        }
+        }
+        else 
+        {
+            cout<<"\nThe linkedlist stack is empty"<<endl;
+        }
+    }
+
+bool Bracket_validator(string value)
+    {
+        bool t=true,f=false;
+    char B1_open='(',B1_close=')',B2_open='[',B2_close=']',B3_open='{',B3_close='}';
+
+        for(int i=0;i<value.size();i++)
+        {
+            if(i==0)
+           { 
+            if(value[i] != B1_close && value[i] != B2_close && value[i] !=B3_close)
+                {
+                    if(value[i]==B1_open || value[i]==B2_open || value[i]==B3_open)
+                         push(value[i]);
+                }
+            else 
+            {
+                return f;
+            }
+        }
+        else 
+        {
+            if(value[i] == B1_close || value[i] == B2_close || value[i] ==B3_close)
+            {
+                char poped_value=pop();
+                if(value[i]==B1_close && poped_value==B1_open || value[i]==B2_close && poped_value==B2_open || value[i]==B3_close && poped_value==B3_open)
+                {
+                    continue;
+                }   
+                else
+                {
+                    return f;
+                }
+            }
+            else 
+            {
+                if(value[i]==B1_open || value[i]==B2_open || value[i]==B3_open)
+                     push(value[i]);
+            }
+
+        }
+
+    }
+    if(length==0)
+        return t;
+    else
+        return f;
 }
 
 };
 
-class Circular_singly_Linked_list
-{
-private:
-int length;
-Nodes *head;
 
-public:
-Circular_singly_Linked_list()
-{
-length=0;
-head=NULL;
-
-}
-
-void insertion(string value, int position)
-{
-//Position check
-if(position<0 || position>length+1)
-{
-cout<<"INvalid position entered !!!"<<endl;
-return;
-}
-Nodes *New_node= new Nodes(value);
-if(position==1)
-{
-if(head!=NULL)
-{
-New_node->Next=head;
-head=New_node;
-Nodes *curr_ptr= head;
-for (int i=1;i<=length;i++)
-{
-curr_ptr=curr_ptr->Next;
-}
-curr_ptr->Next=New_node;
-}
-else
-{
-head=New_node;
-New_node->Next=head;
-}
-}
-length+=1;
-
-}
-void display_linked_list()
-{
-Nodes *Curr_ptr=head;
-if(length==0)
-{
-cout<<"\nPlaylist is empty!!!Enter the songs name first\n";
-return;
-}
-for(int i=1;i<=length;i++)
-{
-cout<<i<<")"<<Curr_ptr->song_name<<endl;
-
-Curr_ptr=Curr_ptr->Next;
-}
-}
-
-//removing song from the end of playlist
-string remove()
-{
-Nodes *curr1=head;
-Nodes *slow=head;
-
-if(length==0)
-{
-cout<<"\nThe playlist is empty! First add some songs"<<endl;
-return " ";
-}
-for(int i=0;i<length-1;i++)
-{
-slow=curr1;
-curr1=curr1->Next;
-}
-slow->Next=head;
-string value=curr1->song_name;
-length-=1;
-delete curr1;
-return value;
-}
-};
 
 int main(void)
 {
-Circular_singly_Linked_list CSL1;
-int user_input;
-while(1)
-{
-cout<<"\n***********SONGS PLAYLIST**************\n";
-cout<<"1)Add new song\n2)Remove Song from the end of the list\n3)Display all songs\n4)Quit";
-cout<<"\nUser_input:";
-cin>>user_input;
-if(user_input==1)
-{
-cout<<"\nEnter the name of song you want to enter:";
-string song_name;
-cin.ignore();
-getline(cin,song_name);
-CSL1.insertion(song_name,1);
-cout<<"Song Added successfully!"<<endl;
-}
-else if(user_input==2)
-{ 
+    cout<<"Enter the brackets to check its validity:";
+    string user_input;
+    cin>>user_input;
 
-string check=CSL1.remove();
-if(check!=" ")
-{
-cout<<check<<" is the removed value from the playlist"<<endl;
-}
-}
-else if(user_input==3)
-{
-cout<<"\nSongs in Playlist\n";
-CSL1.display_linked_list();
-}
-else if(user_input==4)
-{
-break;
-}
-}
+    Linked_List LD_1;
 
+    if(LD_1.Bracket_validator(user_input)==1)
+    {
+        cout<<"true"<<endl;
+    }
+    else 
+    {
+        cout<<"false"<<endl;
+    }
+ 
+    return 0;
 }
-

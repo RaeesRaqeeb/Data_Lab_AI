@@ -54,7 +54,10 @@ class Linked_List
 
     char pop()
     {
-        
+        if(length==0)
+        {
+            return 'N';
+        }
         Nodes *curr=top;
         top=curr->next;
         length-=1;
@@ -89,7 +92,8 @@ bool Bracket_validator(string value)
            { 
             if(value[i] != B1_close && value[i] != B2_close && value[i] !=B3_close)
                 {
-                    push(value[i]);
+                    if(value[i]==B1_open || value[i]==B2_open || value[i]==B3_open)
+                         push(value[i]);
                 }
             else 
             {
@@ -112,7 +116,8 @@ bool Bracket_validator(string value)
             }
             else 
             {
-                push(value[i]);
+                if(value[i]==B1_open || value[i]==B2_open || value[i]==B3_open)
+                     push(value[i]);
             }
 
         }
@@ -127,24 +132,30 @@ bool Bracket_validator(string value)
 
 int main(void)
 {
+   
+
+    Linked_List LD_1;
+    while(1)
+    {
     cout<<"Enter the brackets to check its validity:";
     string user_input;
     cin>>user_input;
-
-    Linked_List LD_1;
-
     if(LD_1.Bracket_validator(user_input)==1)
     {
-        cout<<true<<endl;
+        cout<<"true"<<endl;
+        cout<<"\nWant to end(1/0):";
+        cin>>user_input;
+        if(user_input=="1")
+            break;
     }
     else 
     {
-        cout<<false<<endl;
+        cout<<"false"<<endl;
+        cout<<"\nWant to end(1/0):";
+        cin>>user_input;
+        if(user_input=="1")
+            break;
     }
- 
-   
-
-    
-
+    }
     return 0;
 }
