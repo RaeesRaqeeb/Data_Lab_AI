@@ -1,0 +1,5 @@
+FUll/Strictly binary tree are same: internal node  has 2 children. THe last 2 nodes can be on right
+
+Complete binary tree: 2nd last level should be full and last level insertion should be at left.
+
+Strictly Complete/Perfect binary: All the nodes should be full
